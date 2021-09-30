@@ -1,0 +1,41 @@
+{
+  "name": "@cicciosgamino/color-scheme-button",
+  "version": "0.0.1",
+  "description": "Simple button to handle the color-scheme auto / light / dark / dim",
+  "main": "color-scheme-button.js",
+  "type": "module",
+  "module": "color-scheme-button.js",
+  "scripts": {
+    "dev": "web-dev-server --node-resolve --app-index examples/index.html --watch --open",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CICCIOSGAMINO/color-scheme-button.git"
+  },
+  "keywords": [
+    "Color Scheme",
+    "Light",
+    "Dark",
+    "Auto",
+    "Dimmer",
+    "CustomElement",
+    "Lit"
+  ],
+  "author": "@cicciosgamino",
+  "license": "GPL-3.0",
+  "private": false,
+  "bugs": {
+    "url": "https://github.com/CICCIOSGAMINO/color-scheme-button/issues"
+  },
+  "homepage": "https://github.com/CICCIOSGAMINO/color-scheme-button#readme",
+  "dependencies": {
+    "lit": "*"
+  },
+  "devDependencies": {
+    "@web/dev-server": "^0.1.24"
+  },
+  "directories": {
+    "example": "examples"
+  }
+}
