@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 01-09-2021
+  - document.firstElementChild.setAttribute('color-scheme', theme)
+
+
+## [0.1.0] - 30-09-2021
+### Change
+  - Fix width, height as attribute
+
 ## [0.0.1] - 30-09-2021
 ### Added
 - Init by [@cicciosgamino](https://github.com/CICCIOSGAMINO).

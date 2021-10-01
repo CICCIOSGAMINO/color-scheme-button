@@ -15,3 +15,19 @@ Simple button to handle the color-scheme auto / light / dark / dim
 </p>
 
 ## 🕹️ Examples
+```html
+<style>
+  color-scheme-button {
+      width: 128px;
+      height: 128px;
+
+      --icon-color: purple;
+    }
+</style>
+
+<color-scheme-button
+  id="btn"
+  title="Color Scheme"
+  aria-label="Color Scheme">
+</color-scheme-button>
+```

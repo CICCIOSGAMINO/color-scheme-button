@@ -46,12 +46,19 @@
       display: grid;
       grid-template-rows: auto auto;
       justify-items: center;
-      gap: 5rem;
+      gap: 3rem;
     }
 
     header {
       margin: 1rem;
       padding: 1rem;
+    }
+
+    color-scheme-button {
+      width: 128px;
+      height: 128px;
+
+      --icon-color: purple;
     }
   </style>
   
@@ -61,7 +68,6 @@
 
   <header>
     <input id="dimension" name="dimension" type="range" min="16" max="256" step="16" />
-    <label for="dimension">Value <span id="content"></span></label>
   </header>
 
   <main>
@@ -86,8 +92,9 @@
       const schemeButton = document.querySelector('#btn')
       input.addEventListener('change', event => {
         // set the width and height
-        schemeButton.setAttribute('width', event.target.value)
-        schemeButton.setAttribute('height', event.target.value)
+        console.log(event.target.value)
+        schemeButton.style.width = `${event.target.value}px`
+        schemeButton.style.height = `${event.target.value}px`
       })
     })
   </script>
