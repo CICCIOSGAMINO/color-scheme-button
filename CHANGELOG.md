@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.2] - 04-09-2021
+## Add
+  - shape-rendering="geometricPrecision" to SVG icons
+
 ## [1.0.1] - 04-09-2021
 ## Changed
   - Fixed image link into README.md file
