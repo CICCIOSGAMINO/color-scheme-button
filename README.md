@@ -18,7 +18,7 @@ https://web.dev/building-a-color-scheme/
 
 # 🕹️ Examples
 
-![Color Scheme Button](https://raw.githubusercontent.com/CICCIOSGAMINO/cicciosgamino.github.io/master/images/exampleSchemaButton.gif)
+![Color Scheme Button](https://raw.githubusercontent.com/CICCIOSGAMINO/web.cicciosgamino.github.io/master/public/images/exampleSchemaButton.gif)
 
 ```html
 <style>

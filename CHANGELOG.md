@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.1] - 04-09-2021
+## Changed
+  - Fixed image link into README.md file
+
 ## [1.0.0] - 04-09-2021
 ## Added
   - comment with the code to dispatch the 'schema-event' event

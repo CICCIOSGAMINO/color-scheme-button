@@ -1,6 +1,6 @@
 {
   "name": "@cicciosgamino/color-scheme-button",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Simple button to handle the color-scheme auto / light / dark / dim",
   "main": "color-scheme-button.js",
   "type": "module",
