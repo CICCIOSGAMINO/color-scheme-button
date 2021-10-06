@@ -6,6 +6,8 @@
 
 Simple button to handle the color-scheme auto / light / dark / dim . This custom elment it's a button with 4 SVG icons each for schema (auto, light, dark, dim). Dim schema it about orchestrating lightness and saturation, need to have enough saturation to still have a hue visible, but also just barely pass contrast scores. Check the very well done Adam Argyle intro about the shema / theme.
 
+Little animation when button:hover and button:focus
+
 https://web.dev/building-a-color-scheme/
       
 <p align="center">

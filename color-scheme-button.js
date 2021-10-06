@@ -50,7 +50,7 @@ class ColorSchemeButton extends LitElement {
 
       button:focus .animation-revolution,
       button:hover .animation-revolution {
-        animation: revolution 1.3s ease-in-out infinite forwards;
+        animation: revolution 1s ease-in-out 1 forwards;
       }
 
       button:focus .animation-bigger,
@@ -181,13 +181,13 @@ class ColorSchemeButton extends LitElement {
           <g>
             <g>
               <polygon points="19,9 20.25,6.25 23,5 20.25,3.75 19,1 17.75,3.75 15,5 17.75,6.25" shape-rendering="geometricPrecision" >
-                <animate attributeName="opacity" values="1;0.7;1" dur="1s" repeatCount="indefinite" />
+                <animate attributeName="opacity" values="1;0.7;1" dur="1s" repeatCount="1" />
               </polygon>
               <polygon points="19,15 17.75,17.75 15,19 17.75,20.25 19,23 20.25,20.25 23,19 20.25,17.75" shape-rendering="geometricPrecision" >
-                <animate attributeName="opacity" values="1;0.7;1" dur="2s" repeatCount="indefinite" />
+                <animate attributeName="opacity" values="1;0.7;1" dur="2s" repeatCount="1" />
               </polygon>
               <path d="M11.5,9.5L9,4L6.5,9.5L1,12l5.5,2.5L9,20l2.5-5.5L17,12L11.5,9.5z M9.99,12.99L9,15.17l-0.99-2.18L5.83,12l2.18-0.99 L9,8.83l0.99,2.18L12.17,12L9.99,12.99z" shape-rendering="geometricPrecision">
-                <animate attributeName="opacity" values="1;0.7;1" dur="4s" repeatCount="indefinite" />
+                <animate attributeName="opacity" values="1;0.7;1" dur="4s" repeatCount="1" />
               </path>
             </g>
           </g>
