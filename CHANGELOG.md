@@ -6,6 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.0] - 27-10-2021
+### Changed
+  - Remove the auto mode because we detect the light/dark mode as starting point
+  - Less animations
+
+### Add
+  - Completely new click and prefers-color-scheme handling
+  - Sync between click and media query changes
+
 ## [1.1.0] - 06-10-2021
 ## Changed
   - Only one animation for each svg icon (no continuous animations)

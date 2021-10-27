@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit'
+import { classMap } from 'lit/directives/class-map.js'
 
 class ColorSchemeButton extends LitElement {
   static get styles () {
@@ -48,19 +49,14 @@ class ColorSchemeButton extends LitElement {
         pointer-events: none;
       }
 
-      button:focus .animation-revolution,
-      button:hover .animation-revolution {
+      button:focus .animationRevolution,
+      button:hover .animationRevolution {
         animation: revolution 1s ease-in-out 1 forwards;
       }
 
       button:focus .animation-bigger,
       button:hover .animation-bigger {
         animation: bigger 1s ease-in-out 1 forwards;
-      }
-
-      button:focus .animation-tilt,
-      button:hover .animation-tilt {
-        animation: tilt 1s ease-in 1 forwards;
       }
        
       @keyframes revolution {
@@ -92,41 +88,77 @@ class ColorSchemeButton extends LitElement {
           transform: scale(1);
         }
       }
-
-      @keyframes tilt {
-        0% {
-          opacity: 1;
-          transform: rotate(1);
-        }
-        100% {
-          opacity: .9;
-          transform: rotate(30deg);
-        }
-      }
     `
   }
 
   static get properties () {
     return {
       title: String,
-      ariaLabel: String
+      ariaLabel: String,
+      mode: String
+    }
+  }
+
+  constructor () {
+    super()
+    this.schemas = ['light', 'dark', 'dim']
+    // init the mode
+    this.mode = 'light'
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      this.mode = 'dark'
+    }
+    if (window.matchMedia('(prefers-color-scheme: dim)').matches) {
+      this.mode = 'dim'
+    }
+  }
+
+  connectedCallback () {
+    super.connectedCallback()
+    // listen for changes in prefers-color-scheme
+    window.matchMedia('(prefers-color-scheme: light)')
+      .addEventListener('change', this.#handleChangeLight)
+    window.matchMedia('(prefers-color-scheme: dark)')
+      .addEventListener('change', this.#handleChangeDark)
+    window.matchMedia('(prefers-color-scheme: dim)')
+      .addEventListener('change', this.#handleChangeDim)
+  }
+
+  disconnectedCallback () {
+    super.disconnectedCallback()
+    window.matchMedia('(prefers-color-scheme: light)')
+      .removeEventListener(this.#handleChangeLight)
+    window.matchMedia('(prefers-color-scheme: dark)')
+      .removeEventListener(this.#handleChangeDark)
+    window.matchMedia('(prefers-color-scheme: dim)')
+      .removeEventListener(this.#handleChangeDim)
+  }
+
+  #handleChangeLight = (e) => {
+    if (e.matches) {
+      this.mode = 'light'
+    }
+  }
+
+  #handleChangeDark = (e) => {
+    if (e.matches) {
+      this.mode = 'dark'
+    }
+  }
+
+  #handleChangeDim = (e) => {
+    if (e.matches) {
+      this.mode = 'dim'
     }
   }
 
   #handleClick (event) {
-    const schema = 
-      this.renderRoot.querySelector('button svg:not(.hidden)').id
-    const schemas = ['auto', 'light', 'dark', 'dim']
-    const position = schemas.indexOf(schema)
-    const nextSchema = schemas[((position + 1) % 4)]
-
-    // this.#dispatchSchemeEvent(nextSchema)
+    const schema = event.target.id
+    const position = this.schemas.indexOf(schema)
+    const nextSchema =
+      this.schemas[((position + 1) % this.schemas.length)]
+    this.mode = nextSchema
+    // console.log(`@NEXT >> ${nextSchema}`)
     this.#setDocumentAttribute(nextSchema)
-
-    this.renderRoot.querySelector(`#${schema}`)
-      .classList.toggle('hidden')
-    this.renderRoot.querySelector(`#${nextSchema}`)
-      .classList.toggle('hidden')
   }
 
   #setDocumentAttribute (schema) {
@@ -134,6 +166,7 @@ class ColorSchemeButton extends LitElement {
       .setAttribute('color-scheme', schema)
   } 
 
+  /* TODO ready to be implemented */
   #dispatchSchemeEvent (schema) {
     const schemaEvent = new CustomEvent('schema-event', {
       detail: { schema },
@@ -144,37 +177,52 @@ class ColorSchemeButton extends LitElement {
   }
 
   render () {
+
+    const lightClasses = {
+      animationRevolution: true,
+      hidden: this.mode !== 'light'
+    }
+
+    const darkClasses = {
+      hidden: this.mode !== 'dark'
+    }
+
+    const dimClasses = {
+      hidden: this.mode !== 'dim'
+    }
+
     return html`
       <button id="btn"
         ${this.title} 
         ${this.ariaLabel}
         @click=${this.#handleClick}>
 
-        <!-- svg id attribute is the value used to trigger schemas -->
-        <svg id="auto" class="animation-bigger" viewBox="0 0 24 24"
-          role="img" aria-hidden="true" focusable="false">
-          <g>
-            <path d="M0,0h24v24H0V0z" fill="none" shape-rendering="geometricPrecision"/>
-          </g>
-          <g>
-            <path d="M12,2C6.48,2,2,6.48,2,12s4.48,10,10,10s10-4.48,10-10S17.52,2,12,2z M12,20c-4.41,0-8-3.59-8-8c0-4.41,3.59-8,8-8 s8,3.59,8,8C20,16.41,16.41,20,12,20z M11.01,6L6.88,17h1.9l1-2.81h4.44L15.21,17h1.9L12.98,6H11.01z M10.35,12.59l1.6-4.55h0.09 l1.6,4.55H10.35z"shape-rendering="geometricPrecision" />
-          </g>
-        </svg>
-
-        <svg id="light" class="hidden animation-revolution" viewBox="0 0 24 24"
-          role="img" aria-hidden="true" focusable="false" >
+        <svg id="light"
+          class="${classMap(lightClasses)}"
+          viewBox="0 0 24 24"
+          role="img" 
+          aria-hidden="true" 
+          focusable="false" >
           <rect fill="none" height="24" width="24" shape-rendering="geometricPrecision" />
           <path d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z" shape-rendering="geometricPrecision" />
         </svg>
 
-        <svg id="dark" class="hidden animation-tilt" viewBox="0 0 24 24"
-          role="img" aria-hidden="true" focusable="false" >
+        <svg id="dark"
+          class="${classMap(darkClasses)}"
+          viewBox="0 0 24 24"
+          role="img" 
+          aria-hidden="true" 
+          focusable="false" >
           <rect fill="none" height="24" width="24" shape-rendering="geometricPrecision" />
           <path d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z" shape-rendering="geometricPrecision" />
         </svg>
 
-        <svg id="dim" class="hidden" viewBox="0 0 24 24"
-         role="img" aria-hidden="true" focusable="false" >
+        <svg id="dim"
+          class="${classMap(dimClasses)}"
+          viewBox="0 0 24 24"
+          role="img" 
+          aria-hidden="true" 
+          focusable="false" >
           <g>
             <rect fill="none" height="24" width="24" x="0" shape-rendering="geometricPrecision"/>
           </g>
